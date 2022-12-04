@@ -1,0 +1,92 @@
+1. Promise Order
+What does the code snippet to the right output by console.log?
+
+
+console.log(1)
+const promise = new Promise((resolve) => {
+  console.log(2)
+  resolve()
+  console.log(3)
+})
+
+console.log(4)
+
+promise.then(() => {
+  console.log(5)
+}).then(() => {
+  console.log(6)
+})
+
+console.log(7)
+
+setTimeout(() => {
+  console.log(8)
+}, 10)
+
+setTimeout(() => {
+  console.log(9)
+}, 0)
+
+
+Ans:
+Uses Event-loop concept. Promise object and setTimeout() are async functions, 
+will take longer time then the other codes in the call stack.
+1
+2
+3
+4
+7
+5
+6
+9
+8
+------------------------------------------------------------
+
+5. What does the code snippet to the right output by console.log?
+
+for (var i = 0; i < 5; i++) {
+  setTimeout(() => console.log(i), 0)
+}
+
+for (let i = 0; i < 5; i++) {
+  setTimeout(() => console.log(i), 0)
+}
+
+Ans: it is Question of Scope...
+since 'var' is functional scope if declared in a function but it is very dynamic with its 
+initialisation and keep its value intack within the function.
+whereas 'let' is block scope as it scope exist within the block.
+In this question, 
+in the var for-loop, the value initialise and declared first time the setTimeout will 
+take its time to execute, in this mean time the value of 'i' will change to the next iteration.
+When the time comes to log the value of 'i' , i's value reach out to 5, it will log- 5 5 5 5 5 
+as log will only consider the current value of 'i' at that time and the no. of time it want to 
+log.
+
+
+But it does not happen with let as it is block scope, it retain the value of 'i' till it get 
+logged. As when it start with i=0, it goes to setTimeout it saves the execution stack with i=0,
+and come again with i=1, save the execution stack. Similarly all the value remain pending with
+the stack till the timeOut finishes. hence it will log 0 1 2 3 4 at last.
+
+so solution of this question is 
+5
+5
+5
+5
+5
+0
+1
+2
+3
+4
+
+
+
+
+
+
+
+
+
+
